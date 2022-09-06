@@ -6,7 +6,7 @@ apt-show-versions -u
 uname -r
 cat /etc/debian_version
 apt-get dist-upgrade --purge
-check what's getting updated and what's getting removed!
+echo check what's getting updated and what's getting removed!
 dpkg -l | grep linux-image
 rm_image= echo "What image do you want to remove?"
 read rm_image
