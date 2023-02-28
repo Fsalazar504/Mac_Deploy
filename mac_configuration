@@ -2,20 +2,23 @@
 
 
 # Set variables for the new account
-username="newuser"
-password="password"
+echo "What is the username"
+read username
+
+echo "Enter a password"
+read password
 
 # Create the new user account
 sudo dscl . -create /Users/$username
 sudo dscl . -create /Users/$username UserShell /bin/bash
-sudo dscl . -create /Users/$username RealName "New User"
+sudo dscl . -create /Users/$username RealName "$username"
 sudo dscl . -create /Users/$username UniqueID "1001"
 sudo dscl . -create /Users/$username PrimaryGroupID 20
 sudo dscl . -create /Users/$username NFSHomeDirectory /Users/$username
 sudo dscl . -passwd /Users/$username $password
 sudo dscl . -append /Groups/admin GroupMembership $username
 
-# Configure the laptop settings
+# Configure laptop settings
 # Set computer name
 echo "Enter new computer name:"
 read computer_name
@@ -24,7 +27,7 @@ sudo scutil --set HostName "$computer_name"
 sudo scutil --set LocalHostName "$computer_name"
 sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "$computer_name"
 sudo softwareupdate --install --recommended
-sudo defaults write /Library/Preferences/com.apple.loginwindow LoginwindowText "This laptop is owned by John Doe."
+sudo defaults write /Library/Preferences/com.apple.loginwindow LoginwindowText "This laptop is Lawrence Berkeley Lab Property."
 sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "My Laptop"
 sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server ServerDescription -string "File Sharing and Printing"
 sudo defaults write /Library/Preferences/com.apple.TimeMachine DoNotOfferNewDisksForBackup -bool true
@@ -36,7 +39,6 @@ sudo launchctl unload -w /System/Library/LaunchDaemons/com.apple.mDNSResponder.p
 sudo launchctl unload -w /System/Library/LaunchDaemons/com.apple.discoveryd.plist
 
 echo "The new account has been created and settings have been configured."
-
 
 
 # Install Xcode Command Line Tools
